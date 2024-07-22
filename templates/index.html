@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Photo Sharing App</title>
+<link rel="stylesheet" href="static/styles.css" />
+</head>
+<body>
+<h1>Photo Sharing App</h1>
+<div class="gallery">
+{% for photo in photos %}
+<div class="photo-container">
+<img src="{{ url_for('static', filename='uploads/' + photo.image_filename) }}" alt="{{ photo.title }}" />
+<div class="photo-info">
+<h2>{{ photo.title }}</h2>
+<p>{{ photo.description }}</p>
+<form action="{{ url_for('like_photo') }}" method="post">
+<input type="hidden" name="photo_id" value="{{ photo.id }}" />
+<button type="submit">Like</button>
+</form>
+</div>
+</div>
+{% endfor %}
+</div>
+
+<div class="upload-form">
+<h2>Upload a Photo</h2>
+<form action="{{ url_for('upload_photo') }}" method="post" enctype="multipart/form-data">
+<label for="title">Title:</label>
+<input type="text" name="title" id="title" required />
+<label for="description">Description:</label>
+<textarea name="description" id="description" required></textarea>
+<label for="image">Image:</label>
+<input type="file" name="image" id="image" required />
+<input type="submit" value="Upload" />
+</form>
+</div>
+</body>
+</html>
+
